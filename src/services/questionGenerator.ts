@@ -1,10 +1,25 @@
-import type { Question, Operation, GameConfig } from '../types';
+import type { Question, Operation, GameConfig, DifficultyLevel } from '../types';
 import { randomInt } from '../utils/random';
 
 const SINGLE_DIGIT_MIN = 1;
 const SINGLE_DIGIT_MAX = 9;
 const TWO_DIGIT_MIN = 10;
 const TWO_DIGIT_MAX = 99;
+
+function getAllowedOperations(difficultyLevel: DifficultyLevel): Operation[] {
+  switch (difficultyLevel) {
+    case 'EASY':
+      return ['addition', 'subtraction'];
+    case 'MEDIUM':
+      return ['addition', 'subtraction', 'multiplication'];
+    case 'HARD':
+      return ['addition', 'subtraction', 'multiplication', 'division'];
+    case 'MIXED':
+      return ['addition', 'subtraction', 'multiplication', 'division'];
+    default:
+      return ['addition', 'subtraction', 'multiplication', 'division'];
+  }
+}
 
 function generateSingleDigit(): number {
   return randomInt(SINGLE_DIGIT_MIN, SINGLE_DIGIT_MAX);
@@ -14,10 +29,16 @@ function generateTwoDigit(): number {
   return randomInt(TWO_DIGIT_MIN, TWO_DIGIT_MAX);
 }
 
+function shouldUseSingleDigitOnly(config: GameConfig): boolean {
+  return config.difficultyLevel === 'EASY' || config.difficultyLevel === 'MEDIUM';
+}
+
 function generateAdditionQuestion(config: GameConfig): Question {
-  if (config.allowTwoDigitOperations) {
-    const operand1 = generateTwoDigit();
-    const operand2 = generateTwoDigit();
+  const useSingleDigit = shouldUseSingleDigitOnly(config) || !config.allowTwoDigitOperations;
+  
+  if (useSingleDigit) {
+    const operand1 = generateSingleDigit();
+    const operand2 = generateSingleDigit();
     return {
       operand1,
       operand2,
@@ -27,8 +48,8 @@ function generateAdditionQuestion(config: GameConfig): Question {
     };
   }
   
-  const operand1 = generateSingleDigit();
-  const operand2 = generateSingleDigit();
+  const operand1 = generateTwoDigit();
+  const operand2 = generateTwoDigit();
   return {
     operand1,
     operand2,
@@ -39,9 +60,11 @@ function generateAdditionQuestion(config: GameConfig): Question {
 }
 
 function generateSubtractionQuestion(config: GameConfig): Question {
-  if (config.allowTwoDigitOperations) {
-    const operand1 = generateTwoDigit();
-    const operand2 = generateTwoDigit();
+  const useSingleDigit = shouldUseSingleDigitOnly(config) || !config.allowTwoDigitOperations;
+  
+  if (useSingleDigit) {
+    const operand1 = generateSingleDigit();
+    const operand2 = generateSingleDigit();
     if (operand1 >= operand2) {
       return {
         operand1,
@@ -60,8 +83,8 @@ function generateSubtractionQuestion(config: GameConfig): Question {
     };
   }
   
-  const operand1 = generateSingleDigit();
-  const operand2 = generateSingleDigit();
+  const operand1 = generateTwoDigit();
+  const operand2 = generateTwoDigit();
   if (operand1 >= operand2) {
     return {
       operand1,
@@ -81,8 +104,10 @@ function generateSubtractionQuestion(config: GameConfig): Question {
 }
 
 function generateMultiplicationQuestion(config: GameConfig): Question {
-  if (config.allowTwoDigitOperations) {
-    const operand1 = generateTwoDigit();
+  const useSingleDigit = shouldUseSingleDigitOnly(config) || !config.allowTwoDigitOperations;
+  
+  if (useSingleDigit) {
+    const operand1 = generateSingleDigit();
     const operand2 = generateSingleDigit();
     return {
       operand1,
@@ -93,7 +118,7 @@ function generateMultiplicationQuestion(config: GameConfig): Question {
     };
   }
   
-  const operand1 = generateSingleDigit();
+  const operand1 = generateTwoDigit();
   const operand2 = generateSingleDigit();
   return {
     operand1,
@@ -105,13 +130,12 @@ function generateMultiplicationQuestion(config: GameConfig): Question {
 }
 
 function generateDivisionQuestion(config: GameConfig): Question {
-  if (config.allowTwoDigitOperations) {
+  const useSingleDigit = shouldUseSingleDigitOnly(config) || !config.allowTwoDigitOperations;
+  
+  if (useSingleDigit) {
     const divisor = generateSingleDigit();
-    const maxQuotient = Math.floor(TWO_DIGIT_MAX / divisor);
-    const minQuotient = Math.ceil(TWO_DIGIT_MIN / divisor);
-    const quotient = randomInt(minQuotient, maxQuotient);
+    const quotient = generateSingleDigit();
     const dividend = divisor * quotient;
-    
     return {
       operand1: dividend,
       operand2: divisor,
@@ -122,8 +146,11 @@ function generateDivisionQuestion(config: GameConfig): Question {
   }
   
   const divisor = generateSingleDigit();
-  const quotient = generateSingleDigit();
+  const maxQuotient = Math.floor(TWO_DIGIT_MAX / divisor);
+  const minQuotient = Math.ceil(TWO_DIGIT_MIN / divisor);
+  const quotient = randomInt(minQuotient, maxQuotient);
   const dividend = divisor * quotient;
+  
   return {
     operand1: dividend,
     operand2: divisor,
@@ -141,8 +168,8 @@ const questionGenerators: Record<Operation, (config: GameConfig) => Question> = 
 };
 
 export function generateQuestion(config: GameConfig): Question {
-  const operations: Operation[] = ['addition', 'subtraction', 'multiplication', 'division'];
-  const randomOperation = operations[randomInt(0, operations.length - 1)];
+  const allowedOperations = getAllowedOperations(config.difficultyLevel);
+  const randomOperation = allowedOperations[randomInt(0, allowedOperations.length - 1)];
   const generator = questionGenerators[randomOperation];
   return generator(config);
 }
