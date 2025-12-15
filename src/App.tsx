@@ -78,15 +78,13 @@ function App() {
           allowTwoDigitOperations={config.allowTwoDigitOperations}
           onToggle={(value) => setConfig({ ...config, allowTwoDigitOperations: value })}
         />
-        <label className="config-toggle">
-          <input
-            type="checkbox"
-            checked={timerEnabled}
-            onChange={(e) => setTimerEnabled(e.target.checked)}
-            className="config-checkbox"
-          />
-          <span className="config-label">{t.enableTimer}</span>
-        </label>
+        <button
+          type="button"
+          className={`config-toggle-button ${timerEnabled ? 'active' : ''}`}
+          onClick={() => setTimerEnabled(!timerEnabled)}
+        >
+          {t.enableTimer}
+        </button>
         {timerEnabled && <TimerDisplay remainingSeconds={timer.remainingSeconds} isExpired={timer.isExpired} />}
       </header>
       

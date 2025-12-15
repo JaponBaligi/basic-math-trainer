@@ -7,20 +7,18 @@ interface ConfigToggleProps {
 
 export function ConfigToggle({ allowTwoDigitOperations, onToggle }: ConfigToggleProps) {
   const { t } = useLanguage();
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onToggle(e.target.checked);
+  const handleClick = () => {
+    onToggle(!allowTwoDigitOperations);
   };
 
   return (
-    <label className="config-toggle">
-      <input
-        type="checkbox"
-        checked={allowTwoDigitOperations}
-        onChange={handleChange}
-        className="config-checkbox"
-      />
-      <span className="config-label">{t.enableTwoDigitOperations}</span>
-    </label>
+    <button
+      type="button"
+      className={`config-toggle-button ${allowTwoDigitOperations ? 'active' : ''}`}
+      onClick={handleClick}
+    >
+      {t.enableTwoDigitOperations}
+    </button>
   );
 }
 
