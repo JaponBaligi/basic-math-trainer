@@ -16,8 +16,11 @@ export function QuestionDisplay({ question }: QuestionDisplayProps) {
   };
   
   const formatResult = (): string => {
-    if (question.questionType === 'fillInBlank' && question.missingPosition === 'result') {
-      return '__';
+    if (question.questionType === 'fillInBlank') {
+      if (question.missingPosition === 'result') {
+        return '__';
+      }
+      return String(question.correctAnswer);
     }
     return '?';
   };
