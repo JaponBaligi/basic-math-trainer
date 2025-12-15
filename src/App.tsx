@@ -20,21 +20,30 @@ function App() {
   const [timerEnabled, setTimerEnabled] = useState(false);
 
   const { gameState, startNewQuestion, handleAnswerSubmit, handleAnswerChange, handleNextQuestion } = useMathGame(config);
-  const timer = useTimer(timerEnabled);
+  const timer = useTimer(false, 20);
 
   useEffect(() => {
     startNewQuestion();
   }, [startNewQuestion, config]);
 
   useEffect(() => {
-    if (timerEnabled) {
+    if (timerEnabled && gameState.currentQuestion && !gameState.showFeedback) {
+      timer.reset();
       timer.start();
-    } else {
+    } else if (!timerEnabled) {
       timer.stop();
       timer.reset();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timerEnabled]);
+  }, [timerEnabled, gameState.currentQuestion, gameState.showFeedback]);
+
+  useEffect(() => {
+    if (timer.isExpired && !gameState.showFeedback && gameState.currentQuestion) {
+      timer.stop();
+      handleAnswerSubmit();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timer.isExpired]);
 
   const canSubmit = gameState.userAnswer.trim() !== '' && !gameState.showFeedback;
   const showFeedback = gameState.showFeedback && gameState.currentQuestion;
@@ -61,7 +70,7 @@ function App() {
           />
           <span className="config-label">Enable timer</span>
         </label>
-        {timerEnabled && <TimerDisplay elapsedSeconds={timer.elapsedSeconds} />}
+        {timerEnabled && <TimerDisplay remainingSeconds={timer.remainingSeconds} isExpired={timer.isExpired} />}
       </header>
       
       <main className="app-main">
@@ -74,7 +83,7 @@ function App() {
                 value={gameState.userAnswer}
                 onChange={handleAnswerChange}
                 onSubmit={handleAnswerSubmit}
-                disabled={gameState.showFeedback}
+                disabled={gameState.showFeedback || timer.isExpired}
               />
               {!showNextButton && (
                 <SubmitButton onClick={handleAnswerSubmit} disabled={!canSubmit} />
