@@ -70,6 +70,25 @@
   box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
 }
 
+.timer-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.timer-label {
+  color: #666666;
+}
+
+.timer-value {
+  color: #000000;
+  font-family: 'Courier New', monospace;
+}
+
 .app-main {
   flex: 1;
   display: flex;
