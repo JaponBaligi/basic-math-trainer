@@ -1,13 +1,22 @@
 interface FeedbackDisplayProps {
   isCorrect: boolean;
   correctAnswer: number;
+  isTimeout: boolean;
 }
 
-export function FeedbackDisplay({ isCorrect, correctAnswer }: FeedbackDisplayProps) {
+export function FeedbackDisplay({ isCorrect, correctAnswer, isTimeout }: FeedbackDisplayProps) {
   if (isCorrect) {
     return (
       <div className="feedback feedback-correct">
         ✓ Correct!
+      </div>
+    );
+  }
+
+  if (isTimeout) {
+    return (
+      <div className="feedback feedback-incorrect">
+        ⏱ Time is up. The correct answer is {correctAnswer}
       </div>
     );
   }

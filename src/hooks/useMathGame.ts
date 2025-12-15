@@ -14,6 +14,7 @@ export function useMathGame(config: GameConfig = DEFAULT_CONFIG) {
     userAnswer: '',
     isCorrect: null,
     showFeedback: false,
+    isTimeout: false,
   });
 
   const startNewQuestion = useCallback(() => {
@@ -23,10 +24,11 @@ export function useMathGame(config: GameConfig = DEFAULT_CONFIG) {
       userAnswer: '',
       isCorrect: null,
       showFeedback: false,
+      isTimeout: false,
     });
   }, [config]);
 
-  const handleAnswerSubmit = useCallback(() => {
+  const handleAnswerSubmit = useCallback((isTimeout: boolean = false) => {
     if (!gameState.currentQuestion) {
       return;
     }
@@ -36,6 +38,7 @@ export function useMathGame(config: GameConfig = DEFAULT_CONFIG) {
       ...prev,
       isCorrect: isValid,
       showFeedback: true,
+      isTimeout,
     }));
   }, [gameState.currentQuestion, gameState.userAnswer]);
 

@@ -25,5 +25,6 @@ export interface GameState {
   userAnswer: string;
   isCorrect: boolean | null;
   showFeedback: boolean;
+  isTimeout: boolean;
 }
 

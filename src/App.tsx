@@ -40,7 +40,7 @@ function App() {
   useEffect(() => {
     if (timer.isExpired && !gameState.showFeedback && gameState.currentQuestion) {
       timer.stop();
-      handleAnswerSubmit();
+      handleAnswerSubmit(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timer.isExpired]);
@@ -94,6 +94,7 @@ function App() {
               <FeedbackDisplay
                 isCorrect={gameState.isCorrect}
                 correctAnswer={gameState.currentQuestion.correctAnswer}
+                isTimeout={gameState.isTimeout}
               />
             )}
 
