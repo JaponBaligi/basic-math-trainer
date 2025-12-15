@@ -40,6 +40,36 @@
   font-weight: 500;
 }
 
+.difficulty-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.difficulty-label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.difficulty-select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 2px solid #000000;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #000000;
+  cursor: pointer;
+}
+
+.difficulty-select:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
 .app-main {
   flex: 1;
   display: flex;
