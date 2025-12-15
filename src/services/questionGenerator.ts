@@ -1,4 +1,4 @@
-import type { Question, Operation, GameConfig, DifficultyLevel } from '../types';
+import type { Question, Operation, GameConfig, DifficultyLevel, MissingPosition } from '../types';
 import { randomInt } from '../utils/random';
 
 const SINGLE_DIGIT_MIN = 1;
@@ -160,6 +160,28 @@ function generateDivisionQuestion(config: GameConfig): Question {
   };
 }
 
+function convertToFillInBlank(question: Question, missingPosition: MissingPosition): Question {
+  const result: Question = {
+    ...question,
+    questionType: 'fillInBlank',
+    missingPosition,
+  };
+  
+  if (missingPosition === 'operand1') {
+    result.operand1 = null;
+  } else if (missingPosition === 'operand2') {
+    result.operand2 = null;
+  }
+  
+  return result;
+}
+
+function generateFillInBlankQuestion(baseQuestion: Question): Question {
+  const possiblePositions: MissingPosition[] = ['operand1', 'operand2', 'result'];
+  const missingPosition = possiblePositions[randomInt(0, possiblePositions.length - 1)];
+  return convertToFillInBlank(baseQuestion, missingPosition);
+}
+
 const questionGenerators: Record<Operation, (config: GameConfig) => Question> = {
   addition: generateAdditionQuestion,
   subtraction: generateSubtractionQuestion,
@@ -167,10 +189,20 @@ const questionGenerators: Record<Operation, (config: GameConfig) => Question> = 
   division: generateDivisionQuestion,
 };
 
+function shouldIncludeFillInBlank(config: GameConfig): boolean {
+  return config.difficultyLevel === 'HARD';
+}
+
 export function generateQuestion(config: GameConfig): Question {
   const allowedOperations = getAllowedOperations(config.difficultyLevel);
   const randomOperation = allowedOperations[randomInt(0, allowedOperations.length - 1)];
   const generator = questionGenerators[randomOperation];
-  return generator(config);
+  const baseQuestion = generator(config);
+  
+  if (shouldIncludeFillInBlank(config) && randomInt(0, 1) === 1) {
+    return generateFillInBlankQuestion(baseQuestion);
+  }
+  
+  return baseQuestion;
 }
 
