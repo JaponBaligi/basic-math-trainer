@@ -99,25 +99,16 @@ function generateMultiplicationQuestion(config: GameConfig): Question {
 function generateDivisionQuestion(config: GameConfig): Question {
   if (config.allowTwoDigitOperations) {
     const divisor = generateSingleDigit();
-    const quotient = generateTwoDigit();
+    const maxQuotient = Math.floor(TWO_DIGIT_MAX / divisor);
+    const minQuotient = Math.ceil(TWO_DIGIT_MIN / divisor);
+    const quotient = randomInt(minQuotient, maxQuotient);
     const dividend = divisor * quotient;
     
-    if (dividend <= TWO_DIGIT_MAX) {
-      return {
-        operand1: dividend,
-        operand2: divisor,
-        operation: 'division',
-        correctAnswer: quotient,
-      };
-    }
-    
-    const smallerQuotient = Math.floor(TWO_DIGIT_MAX / divisor);
-    const adjustedDividend = divisor * smallerQuotient;
     return {
-      operand1: adjustedDividend,
+      operand1: dividend,
       operand2: divisor,
       operation: 'division',
-      correctAnswer: smallerQuotient,
+      correctAnswer: quotient,
     };
   }
   
