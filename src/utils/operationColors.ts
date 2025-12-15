@@ -10,3 +10,13 @@ export function getOperationColor(operation: Operation): string {
   return colorMap[operation];
 }
 
+export function getOperationBackgroundColor(operation: Operation): string {
+  const colorMap: Record<Operation, string> = {
+    addition: '#eff6ff',
+    subtraction: '#f0fdf4',
+    multiplication: '#fff7ed',
+    division: '#faf5ff',
+  };
+  return colorMap[operation];
+}
+
