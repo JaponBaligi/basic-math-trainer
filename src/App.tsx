@@ -12,6 +12,7 @@ import './App.css';
 function App() {
   const [config, setConfig] = useState<GameConfig>({
     allowTwoDigitOperations: false,
+    difficultyLevel: 'MIXED',
   });
 
   const { gameState, startNewQuestion, handleAnswerSubmit, handleAnswerChange, handleNextQuestion } = useMathGame(config);
@@ -30,7 +31,7 @@ function App() {
         <h1>Mental Math Trainer</h1>
         <ConfigToggle
           allowTwoDigitOperations={config.allowTwoDigitOperations}
-          onToggle={(value) => setConfig({ allowTwoDigitOperations: value })}
+          onToggle={(value) => setConfig({ ...config, allowTwoDigitOperations: value })}
         />
       </header>
       

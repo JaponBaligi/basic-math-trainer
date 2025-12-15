@@ -5,6 +5,7 @@ import { validateAnswer } from '../services/answerValidator';
 
 const DEFAULT_CONFIG: GameConfig = {
   allowTwoDigitOperations: false,
+  difficultyLevel: 'MIXED',
 };
 
 export function useMathGame(config: GameConfig = DEFAULT_CONFIG) {

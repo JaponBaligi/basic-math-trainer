@@ -23,6 +23,7 @@ function generateAdditionQuestion(config: GameConfig): Question {
       operand2,
       operation: 'addition',
       correctAnswer: operand1 + operand2,
+      questionType: 'standard',
     };
   }
   
@@ -33,6 +34,7 @@ function generateAdditionQuestion(config: GameConfig): Question {
     operand2,
     operation: 'addition',
     correctAnswer: operand1 + operand2,
+    questionType: 'standard',
   };
 }
 
@@ -46,6 +48,7 @@ function generateSubtractionQuestion(config: GameConfig): Question {
         operand2,
         operation: 'subtraction',
         correctAnswer: operand1 - operand2,
+        questionType: 'standard',
       };
     }
     return {
@@ -53,6 +56,7 @@ function generateSubtractionQuestion(config: GameConfig): Question {
       operand2: operand1,
       operation: 'subtraction',
       correctAnswer: operand2 - operand1,
+      questionType: 'standard',
     };
   }
   
@@ -64,6 +68,7 @@ function generateSubtractionQuestion(config: GameConfig): Question {
       operand2,
       operation: 'subtraction',
       correctAnswer: operand1 - operand2,
+      questionType: 'standard',
     };
   }
   return {
@@ -71,6 +76,7 @@ function generateSubtractionQuestion(config: GameConfig): Question {
     operand2: operand1,
     operation: 'subtraction',
     correctAnswer: operand2 - operand1,
+    questionType: 'standard',
   };
 }
 
@@ -83,6 +89,7 @@ function generateMultiplicationQuestion(config: GameConfig): Question {
       operand2,
       operation: 'multiplication',
       correctAnswer: operand1 * operand2,
+      questionType: 'standard',
     };
   }
   
@@ -93,6 +100,7 @@ function generateMultiplicationQuestion(config: GameConfig): Question {
     operand2,
     operation: 'multiplication',
     correctAnswer: operand1 * operand2,
+    questionType: 'standard',
   };
 }
 
@@ -109,6 +117,7 @@ function generateDivisionQuestion(config: GameConfig): Question {
       operand2: divisor,
       operation: 'division',
       correctAnswer: quotient,
+      questionType: 'standard',
     };
   }
   
@@ -120,6 +129,7 @@ function generateDivisionQuestion(config: GameConfig): Question {
     operand2: divisor,
     operation: 'division',
     correctAnswer: quotient,
+    questionType: 'standard',
   };
 }
 
