@@ -29,18 +29,20 @@ export function useMathGame(config: GameConfig = DEFAULT_CONFIG) {
   }, [config]);
 
   const handleAnswerSubmit = useCallback((isTimeout: boolean = false) => {
-    if (!gameState.currentQuestion) {
-      return;
-    }
+    setGameState((prev) => {
+      if (!prev.currentQuestion) {
+        return prev;
+      }
 
-    const isValid = validateAnswer(gameState.currentQuestion, gameState.userAnswer);
-    setGameState((prev) => ({
-      ...prev,
-      isCorrect: isValid,
-      showFeedback: true,
-      isTimeout,
-    }));
-  }, [gameState.currentQuestion, gameState.userAnswer]);
+      const isValid = validateAnswer(prev.currentQuestion, prev.userAnswer);
+      return {
+        ...prev,
+        isCorrect: isValid,
+        showFeedback: true,
+        isTimeout,
+      };
+    });
+  }, []);
 
   const handleAnswerChange = useCallback((value: string) => {
     setGameState((prev) => ({

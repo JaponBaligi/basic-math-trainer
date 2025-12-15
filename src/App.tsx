@@ -40,10 +40,12 @@ function App() {
   useEffect(() => {
     if (timer.isExpired && !gameState.showFeedback && gameState.currentQuestion) {
       timer.stop();
-      handleAnswerSubmit(true);
+      if (!gameState.showFeedback) {
+        handleAnswerSubmit(true);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timer.isExpired]);
+  }, [timer.isExpired, gameState.showFeedback]);
 
   const canSubmit = gameState.userAnswer.trim() !== '' && !gameState.showFeedback;
   const showFeedback = gameState.showFeedback && gameState.currentQuestion;
@@ -82,11 +84,11 @@ function App() {
               <AnswerInput
                 value={gameState.userAnswer}
                 onChange={handleAnswerChange}
-                onSubmit={handleAnswerSubmit}
+                onSubmit={() => handleAnswerSubmit(false)}
                 disabled={gameState.showFeedback || timer.isExpired}
               />
               {!showNextButton && (
-                <SubmitButton onClick={handleAnswerSubmit} disabled={!canSubmit} />
+                <SubmitButton onClick={() => handleAnswerSubmit(false)} disabled={!canSubmit} />
               )}
             </div>
 
