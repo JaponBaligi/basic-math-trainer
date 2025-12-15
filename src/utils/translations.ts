@@ -20,7 +20,7 @@ const translations: Record<Language, Translations> = {
     theCorrectAnswerIs: 'The correct answer is',
   },
   tr: {
-    appTitle: 'Zihinsel Matematik Antrenörü',
+    appTitle: 'Basit Matematik',
     difficulty: 'Zorluk:',
     easy: 'KOLAY',
     medium: 'ORTA',
