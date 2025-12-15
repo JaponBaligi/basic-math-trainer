@@ -63,7 +63,6 @@
   font-weight: 500;
   border: 2px solid;
   border-radius: 6px;
-  background-color: #ffffff;
   color: #000000;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
@@ -72,10 +71,11 @@
 
 .two-digit-toggle {
   border-color: #ffa366;
+  background-color: #fff4ed;
 }
 
 .two-digit-toggle:hover {
-  background-color: #fff4ed;
+  background-color: #ffe8d6;
 }
 
 .two-digit-toggle.active {
@@ -86,10 +86,11 @@
 
 .timer-toggle {
   border-color: #90ee90;
+  background-color: #f0fff0;
 }
 
 .timer-toggle:hover {
-  background-color: #f0fff0;
+  background-color: #e0ffe0;
 }
 
 .timer-toggle.active {
