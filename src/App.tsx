@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import type { GameConfig, DifficultyLevel } from './types';
 import { useMathGame } from './hooks/useMathGame';
 import { useTimer } from './hooks/useTimer';
@@ -18,18 +18,27 @@ function App() {
     difficultyLevel: 'MIXED',
   });
   const [timerEnabled, setTimerEnabled] = useState(false);
+  const questionIdRef = useRef<number>(0);
 
   const { gameState, startNewQuestion, handleAnswerSubmit, handleAnswerChange, handleNextQuestion } = useMathGame(config);
   const timer = useTimer(false, 20);
 
   useEffect(() => {
     startNewQuestion();
+    questionIdRef.current += 1;
   }, [startNewQuestion, config]);
 
   useEffect(() => {
     if (timerEnabled && gameState.currentQuestion && !gameState.showFeedback) {
+      const currentQuestionId = questionIdRef.current;
       timer.reset();
       timer.start();
+      
+      return () => {
+        if (currentQuestionId === questionIdRef.current) {
+          timer.stop();
+        }
+      };
     } else if (!timerEnabled) {
       timer.stop();
       timer.reset();
@@ -38,14 +47,14 @@ function App() {
   }, [timerEnabled, gameState.currentQuestion, gameState.showFeedback]);
 
   useEffect(() => {
-    if (timer.isExpired && !gameState.showFeedback && gameState.currentQuestion) {
-      timer.stop();
-      if (!gameState.showFeedback) {
+    const currentQuestionId = questionIdRef.current;
+    if (timer.isExpired && !gameState.showFeedback && gameState.currentQuestion && timerEnabled && timer.isRunning === false) {
+      if (currentQuestionId === questionIdRef.current) {
         handleAnswerSubmit(true);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timer.isExpired, gameState.showFeedback]);
+  }, [timer.isExpired, timer.isRunning, gameState.showFeedback, gameState.currentQuestion, timerEnabled]);
 
   const canSubmit = gameState.userAnswer.trim() !== '' && !gameState.showFeedback;
   const showFeedback = gameState.showFeedback && gameState.currentQuestion;
@@ -101,7 +110,12 @@ function App() {
             )}
 
             {showNextButton && (
-              <NextButton onClick={handleNextQuestion} />
+              <NextButton onClick={() => {
+                if (timerEnabled) {
+                  timer.reset();
+                }
+                handleNextQuestion();
+              }} />
             )}
           </>
         )}
