@@ -36,12 +36,12 @@ export function DifficultySelector({ difficultyLevel, onSelect }: DifficultySele
       </label>
       <select
         id="difficulty-select"
-        className="difficulty-select"
+        className={`difficulty-select difficulty-${difficultyLevel.toLowerCase()}`}
         value={difficultyLevel}
         onChange={handleChange}
       >
         {DIFFICULTY_OPTIONS.map((option) => (
-          <option key={option} value={option}>
+          <option key={option} value={option} className={`difficulty-option difficulty-${option.toLowerCase()}`}>
             {getDifficultyLabel(option, t)}
           </option>
         ))}

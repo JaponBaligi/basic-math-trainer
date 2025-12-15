@@ -116,17 +116,73 @@
   padding: 0.5rem 1rem;
   font-size: 1rem;
   font-weight: 500;
-  border: 2px solid #000000;
+  border: 2px solid;
   border-radius: 6px;
   background-color: #ffffff;
   color: #000000;
   cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 
 .difficulty-select:focus {
   outline: none;
-  border-color: #0066cc;
-  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.difficulty-select.difficulty-easy {
+  border-color: #90ee90;
+  background-color: #f0fff0;
+}
+
+.difficulty-select.difficulty-easy:focus {
+  box-shadow: 0 0 0 2px rgba(144, 238, 144, 0.3);
+}
+
+.difficulty-select.difficulty-medium {
+  border-color: #ffa366;
+  background-color: #fff4ed;
+}
+
+.difficulty-select.difficulty-medium:focus {
+  box-shadow: 0 0 0 2px rgba(255, 163, 102, 0.3);
+}
+
+.difficulty-select.difficulty-hard {
+  border-color: #ff6b6b;
+  background-color: #ffe6e6;
+}
+
+.difficulty-select.difficulty-hard:focus {
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.3);
+}
+
+.difficulty-select.difficulty-mixed {
+  border-color: #808080;
+  background-color: #f5f5f5;
+}
+
+.difficulty-select.difficulty-mixed:focus {
+  box-shadow: 0 0 0 2px rgba(128, 128, 128, 0.3);
+}
+
+.difficulty-option.difficulty-easy {
+  background-color: #f0fff0;
+  color: #000000;
+}
+
+.difficulty-option.difficulty-medium {
+  background-color: #fff4ed;
+  color: #000000;
+}
+
+.difficulty-option.difficulty-hard {
+  background-color: #ffe6e6;
+  color: #000000;
+}
+
+.difficulty-option.difficulty-mixed {
+  background-color: #f5f5f5;
+  color: #000000;
 }
 
 .timer-display {
