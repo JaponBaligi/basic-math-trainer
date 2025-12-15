@@ -61,22 +61,41 @@
   padding: 0.5rem 1rem;
   font-size: 1rem;
   font-weight: 500;
-  border: 2px solid #000000;
+  border: 2px solid;
   border-radius: 6px;
   background-color: #ffffff;
   color: #000000;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   margin-top: 0.5rem;
 }
 
-.config-toggle-button:hover {
-  background-color: #f0f0f0;
+.two-digit-toggle {
+  border-color: #ffa366;
 }
 
-.config-toggle-button.active {
-  background-color: #000000;
+.two-digit-toggle:hover {
+  background-color: #fff4ed;
+}
+
+.two-digit-toggle.active {
+  background-color: #ffa366;
   color: #ffffff;
+  border-color: #ffa366;
+}
+
+.timer-toggle {
+  border-color: #90ee90;
+}
+
+.timer-toggle:hover {
+  background-color: #f0fff0;
+}
+
+.timer-toggle.active {
+  background-color: #90ee90;
+  color: #000000;
+  border-color: #90ee90;
 }
 
 .difficulty-selector {

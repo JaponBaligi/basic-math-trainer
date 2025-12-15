@@ -14,7 +14,7 @@ export function ConfigToggle({ allowTwoDigitOperations, onToggle }: ConfigToggle
   return (
     <button
       type="button"
-      className={`config-toggle-button ${allowTwoDigitOperations ? 'active' : ''}`}
+      className={`config-toggle-button two-digit-toggle ${allowTwoDigitOperations ? 'active' : ''}`}
       onClick={handleClick}
     >
       {t.enableTwoDigitOperations}

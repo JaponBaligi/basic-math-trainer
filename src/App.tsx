@@ -80,7 +80,7 @@ function App() {
         />
         <button
           type="button"
-          className={`config-toggle-button ${timerEnabled ? 'active' : ''}`}
+          className={`config-toggle-button timer-toggle ${timerEnabled ? 'active' : ''}`}
           onClick={() => setTimerEnabled(!timerEnabled)}
         >
           {t.enableTimer}
