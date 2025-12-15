@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import type { Question, GameConfig, GameState } from '../types';
+import type { GameConfig, GameState } from '../types';
 import { generateQuestion } from '../services/questionGenerator';
 import { validateAnswer } from '../services/answerValidator';
 
