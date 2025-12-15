@@ -1,9 +1,12 @@
+import { useLanguage } from '../contexts/LanguageContext';
+
 interface ConfigToggleProps {
   allowTwoDigitOperations: boolean;
   onToggle: (value: boolean) => void;
 }
 
 export function ConfigToggle({ allowTwoDigitOperations, onToggle }: ConfigToggleProps) {
+  const { t } = useLanguage();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onToggle(e.target.checked);
   };
@@ -16,7 +19,7 @@ export function ConfigToggle({ allowTwoDigitOperations, onToggle }: ConfigToggle
         onChange={handleChange}
         className="config-checkbox"
       />
-      <span className="config-label">Enable two-digit operations</span>
+      <span className="config-label">{t.enableTwoDigitOperations}</span>
     </label>
   );
 }

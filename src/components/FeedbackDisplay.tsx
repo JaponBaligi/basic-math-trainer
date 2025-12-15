@@ -1,3 +1,5 @@
+import { useLanguage } from '../contexts/LanguageContext';
+
 interface FeedbackDisplayProps {
   isCorrect: boolean;
   correctAnswer: number;
@@ -5,10 +7,12 @@ interface FeedbackDisplayProps {
 }
 
 export function FeedbackDisplay({ isCorrect, correctAnswer, isTimeout }: FeedbackDisplayProps) {
+  const { t } = useLanguage();
+  
   if (isCorrect) {
     return (
       <div className="feedback feedback-correct">
-        ✓ Correct!
+        ✓ {t.correct}
       </div>
     );
   }
@@ -16,14 +20,14 @@ export function FeedbackDisplay({ isCorrect, correctAnswer, isTimeout }: Feedbac
   if (isTimeout) {
     return (
       <div className="feedback feedback-incorrect">
-        ⏱ Time is up. The correct answer is {correctAnswer}
+        ⏱ {t.timeIsUp} {t.theCorrectAnswerIs} {correctAnswer}
       </div>
     );
   }
 
   return (
     <div className="feedback feedback-incorrect">
-      ✗ Incorrect. The correct answer is {correctAnswer}
+      ✗ {t.incorrect} {t.theCorrectAnswerIs} {correctAnswer}
     </div>
   );
 }

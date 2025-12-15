@@ -1,3 +1,5 @@
+import { useLanguage } from '../contexts/LanguageContext';
+
 interface AnswerInputProps {
   value: string;
   onChange: (value: string) => void;
@@ -6,6 +8,7 @@ interface AnswerInputProps {
 }
 
 export function AnswerInput({ value, onChange, onSubmit, disabled }: AnswerInputProps) {
+  const { t } = useLanguage();
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !disabled) {
       onSubmit();
@@ -28,7 +31,7 @@ export function AnswerInput({ value, onChange, onSubmit, disabled }: AnswerInput
       onChange={handleChange}
       onKeyPress={handleKeyPress}
       disabled={disabled}
-      placeholder="Enter answer"
+      placeholder={t.enterAnswer}
       autoFocus
     />
   );

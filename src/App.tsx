@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import type { GameConfig, DifficultyLevel } from './types';
+import { useLanguage } from './contexts/LanguageContext';
 import { useMathGame } from './hooks/useMathGame';
 import { useTimer } from './hooks/useTimer';
 import { QuestionDisplay } from './components/QuestionDisplay';
@@ -10,6 +11,7 @@ import { NextButton } from './components/NextButton';
 import { ConfigToggle } from './components/ConfigToggle';
 import { DifficultySelector } from './components/DifficultySelector';
 import { TimerDisplay } from './components/TimerDisplay';
+import { LanguageSelector } from './components/LanguageSelector';
 import './App.css';
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
   const [timerEnabled, setTimerEnabled] = useState(false);
   const questionIdRef = useRef<number>(0);
 
+  const { t } = useLanguage();
   const { gameState, startNewQuestion, handleAnswerSubmit, handleAnswerChange, handleNextQuestion } = useMathGame(config);
   const timer = useTimer(false, 20);
 
@@ -63,7 +66,10 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Mental Math Trainer</h1>
+        <div className="header-top">
+          <h1>{t.appTitle}</h1>
+          <LanguageSelector />
+        </div>
         <DifficultySelector
           difficultyLevel={config.difficultyLevel}
           onSelect={(level: DifficultyLevel) => setConfig({ ...config, difficultyLevel: level })}
@@ -79,7 +85,7 @@ function App() {
             onChange={(e) => setTimerEnabled(e.target.checked)}
             className="config-checkbox"
           />
-          <span className="config-label">Enable timer</span>
+          <span className="config-label">{t.enableTimer}</span>
         </label>
         {timerEnabled && <TimerDisplay remainingSeconds={timer.remainingSeconds} isExpired={timer.isExpired} />}
       </header>
